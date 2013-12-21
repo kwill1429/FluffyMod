@@ -31,4 +31,8 @@ public class ConfigHelper {
     public int getItemID(String blockName, int def){
     	return configFile.getItem(blockName, def).getInt();
     }
+    
+    public boolean getFeature (String feature, String comment) {
+    	return configFile.get("### Features ###", feature, false, comment).getBoolean(false);
+    }
 }
