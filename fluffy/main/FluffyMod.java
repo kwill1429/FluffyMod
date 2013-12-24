@@ -8,11 +8,11 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import fluffy.din.DinLoggerStuff;
+import fluffy.main.api.ConfigHelper;
+import fluffy.main.api.LoggingHelper;
 import fluffy.main.proxy.CommonProxy;
-import fluffy.main.api.*;
 import fluffy.messenger.Messenger;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION)
