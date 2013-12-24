@@ -19,9 +19,13 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatMessageComponent;
+import net.minecraftforge.common.Configuration;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import fluffy.main.api.ConfigHelper;
 import fluffy.main.api.LoggingHelper;
 
@@ -33,7 +37,7 @@ import fluffy.main.api.LoggingHelper;
 public class Messenger
 {
 	private static boolean enabled;
-	public static ConfigHelper config = new ConfigHelper(new File(Minecraft.getMinecraft().mcDataDir,"config/Messenger/config.cfg"));
+	public static ConfigHelper config;
 	public static void initStarting(FMLServerStartingEvent event)
 	{
 		if(getEnabled(config))
@@ -258,7 +262,8 @@ class Message implements Serializable
 	private String sender;
 	private String receiver;
 	private String message;
-	private static File messageDir = new File(Minecraft.getMinecraft().mcDataDir,"config/Messenger");
+	
+	private static File messageDir = setMessageDir();
 	private static File messageFile = new File(messageDir,"message.dat");
 	public Message(String sender, String reciever, String message)
 	{
@@ -274,6 +279,18 @@ class Message implements Serializable
 	{
 		return this.receiver;
 	}
+	
+	public static File setMessageDir()
+	{
+		Side s = FMLCommonHandler.instance().getEffectiveSide();
+		if(s==Side.SERVER)
+			return new File("./config/Messenger");
+		else if (s==Side.CLIENT)
+			return new File(Minecraft.getMinecraft().mcDataDir,"config/Messenger");
+		return null;
+		
+	}
+	
 	public String getMessage()
 	{
 		return this.message;
