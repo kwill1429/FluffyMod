@@ -7,10 +7,13 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import fluffy.din.DinLoggerStuff;
 import fluffy.main.proxy.CommonProxy;
 import fluffy.main.api.*;
+import fluffy.messenger.Messenger;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION)
 @NetworkMod(clientSideRequired = Reference.MOD_REQUIRED_CLIENT, serverSideRequired = Reference.MOD_REQUIRED_SERVER)
@@ -31,8 +34,9 @@ public class FluffyMod {
         DinLoggerStuff.preSwag();
         DinLoggerStuff.modMsg();
         
-        
         configs = new ConfigHelper(event);
+
+        Messenger.initPre(configs);
         
 	}
 	
@@ -40,7 +44,7 @@ public class FluffyMod {
 	public void init(FMLInitializationEvent event) {
 		//Init your classes here! 	
 		//Please only one class per a contributor  ( more is allowed tho )
-		
+		Messenger.initMain();
 	}
 
     @EventHandler
@@ -51,6 +55,10 @@ public class FluffyMod {
     	
     }
     
+	@EventHandler
+	public void onServerStarting(FMLServerStartingEvent event) {
+		Messenger.initStarting(event);
+	}
 }
 
 	
